@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Feedback</title>
+  <style>
+    label {
+      float: left;
+      width: 150px;
+    }
+
+    #container {
+      width: 700px;
+      margin: auto;
+      background-color: beige;
+    }
+
+    main {
+      padding: 50px;
+
+    }
+
+    li {
+      list-style-type: none;
+      margin: 0px;
+      padding: 0px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+
+    <main>
+      <h2>Feedback</h2>
+      <h3>Love something? Hate something? Let us know!</h3>
+      Note : Fields marked with an asterisk(*) are mandatory
+      <br><br>
+      <form id="myForm" action="./table.html" onsubmit="newFunction(this)">
+        <label>Title*:</label>
+        <input type="radio" name="title" id="miss" value="miss" required="required" /> Miss
+        <input type="radio" name="title" id="mr" value="mr" required="required" /> Mr.
+        <input type="radio" name="title" id="mrs" value="mrs" required="required" /> Mrs.
+        <br><br>
+
+        <label for="firstName">First Name*:</label>
+        <input type="text" name="firstName" id="firstName" placeholder="First Name" required>
+        <br><br>
+
+        <div id="error_firstName" style="display: none; color: red;">
+            Invalid First Name, Please enter valid first name
+            <br><br>
+        </div>
+
+        <label for="emailId">Email Id*:</label>
+        <input type="text" name="emailId" id="emailId" placeholder="yourname@northeastern.edu" required>
+        <br><br>
+
+        <div id="error_emailId" style="display: none; color: red;">
+            Invalid Email address, Please enter valid Email in user@northeastern.edu
+            <br><br>
+        </div>
+
+        <label for="phoneNumber">Phone Number*:</label>
+        <input type="text" name="phoneNumber" id="phoneNumber" placeholder="xxx-xxx-xxxx" required />
+        <br><br>
+
+        <div id="error_phoneNumber" style="display: none; color: red;">
+            Invalid phone number, Please enter valid phone number in xxx-xxx-xxxx format
+            <br><br>
+        </div>
+
+        <label for="streetAddress1">StreetAddress1*:</label>
+        <input type="text" name="streetAddress1" id="streetAddress1" placeholder="Address" required />
+        <br><br>
+
+        <div id="error_streetAddress1" style="display: none; color: red;">
+            Enter Address
+            <br><br>
+        </div>
+
+
+        <label for="streetAddress2">StreetAddress2:</label>
+        <input type="text" name="streetAddress2" id="streetAddress2" placeholder="Address2" />
+        <br><br>
+
+        <div id="error_streetAddress1" style="display: none; color: red;">
+            Enter Address
+            <br><br>
+        </div>
+
+        <label for="zipCode">ZipCode*:</label>
+        <input type="text" name="zipCode" id="zipCode" placeholder="xxxxx" />
+        <br><br>
+
+        <div id="error_zipCode" style="display: none; color: red;">
+            Invalid ZipCode, Please enter valid zip
+            <br><br>
+        </div>
+
+
+        <label>How did you hear*:</label>
+        <input type="checkbox" name="social" id="Facebook" value="Facebook" />Facebook
+        <input type="checkbox" name="social" id="Google" value="Google" />Google
+        <input type="checkbox" name="social" id="Yelp" value="Yelp" />Yelp
+        <br><br>
+
+      
+        <label for="select">Drinks*:</label>
+        <select id="select" name="source" onchange="showCheckboxes(this)">
+        <option value="Default" selected="selected">
+          -Please select an option-
+        </option>
+        <option value="Hot Black Tea">Hot Black Tea</option>
+        <option value="Cold Coffee">Cold Coffee</option>
+        <option value="Lemon Iced Tea">Lemon Iced Tea</option>
+        <option value="Expresso">Espresso</option>
+        <option value="Latte">Latte</option>
+        </select>
+        <br><br>
+
+
+        <label for="comments">Comments:</label>
+        <textarea name="text" id="comments" placeholder="Your Comments" cols="30" rows="10" required></textarea>
+        <br><br>
+
+        <input id= "btn" type="Submit" value="Submit My Form">
+        <input type="Reset">
+        <br><br>
+
+    </form>
+</main>
+</div>
+
+<script>
+   
+
+
+    function submitted() {
+      alert("Data saved successfully!")
+      window.location.href = "./table.html"
+
+    }
+    // initially we are setting to false 
+    var validName = false;
+    var validEmail = false;
+    var validPhone = false;
+    var validZip = false;
+    // regular expressions for name, email and phone
+    var regExName = /^[a-zA-Z]+$/;
+    var regExEmail = /([\w\.]+)@(northeastern.edu)/;
+    var regExPhone = /\d{3}-?\d{3}-\d{4}$/;
+    var regExzip = /[0-9]{5}/;
+    //values 
+    var firstName = document.getElementById("firstName");
+    firstName.addEventListener("input", validate)
+
+    var emailId = document.getElementById("emailId");
+    emailId.addEventListener("input", validate)
+
+    var phoneNumber = document.getElementById("phoneNumber");
+    phoneNumber.addEventListener("input", validate)
+
+    var zipCode = document.getElementById("zipCode");
+    zipCode.addEventListener("input", validate)
+    // write a funcyion for validate
+    function validate(e){
+        var value = e.target.value;
+        var type = this.id; // we are getting ID of the field
+        let em = "error_" + type;
+        console.log(value,"!!");
+        switch(type){
+            case "firstName":
+                if(!value.trim().match(regExName)){
+                    document.getElementById(em).style.display = "block";
+                    this.style.border = "2px solid red";
+                    validName = false;
+                    console.log("validname", validName)
+                }
+                else{
+                    document.getElementById(em).style.display = "none";
+                    this.style.border = "";
+                    validName = true;
+                    console.log("validname", validName)
+                }
+                break;
+            case "emailId":
+                if(!value.trim().match(regExEmail)){
+                    document.getElementById(em).style.display = "block";
+                    this.style.border = "2px solid red";
+                    validEmail = false;
+                }
+                else{
+                    document.getElementById(em).style.display = "none";
+                    this.style.border = "";
+                    validEmail = true;
+                }
+                break;
+            case "phoneNumber":
+                if(!value.trim().match(regExPhone)){
+                    document.getElementById(em).style.display = "block";
+                    this.style.border = "2px solid red";
+                    validPhone = false;
+                }
+                else{
+                    document.getElementById(em).style.display = "none";
+                    this.style.border = "";
+                    validPhone = true;
+                }
+                break;
+            case "zipCode":
+                if(!value.trim().match(regExzip)){
+                    document.getElementById(em).style.display = "block";
+                    this.style.border = "2px solid red";
+                    validZip = false;
+                    console.log("zipCode not valid", value)
+
+                }
+                else {
+                    document.getElementById(em).style.display = "none";
+                    this.style.border = "";
+                    validZip = true;
+                    console.log("zipCode valid", value)
+
+                }
+                break;
+        }
+
+    }
+
+
+
+
+
+
+    var ulCount = 0;
+    function showCheckboxes(selectList) {
+      var select = document.getElementById("select");
+      var p = select.parentNode;
+      var comments = document.getElementById("comments");
+      var selectValue = select.value;
+      switch (selectValue) {
+        case "Hot Black Tea":
+          if (ulCount > 0) {
+            p.removeChild(document.getElementsByTagName("ul")[0]);
+            ulCount--;
+          }
+          var text = document.createTextNode("Hot Black Tea - Large ($1 Extra)");
+          var ul = document.createElement("ul");
+          var li = document.createElement("li");
+          li.innerHTML =
+            '<input id="checkbox" type="checkbox" name="hear" value="Hot Black Tea" onclick="checkboxOnclick(this) " />';
+          var label = document.createElement("li");
+          label.innerHTML =
+            '<label id="label" for="textarea" style="visibility:hidden;">Any additional customization*:</label>';
+          var textarea = document.createElement("li");
+          textarea.innerHTML =
+            '<textarea name="example" id="textarea" style="visibility:hidden;" placeholder="Your Customizations" rows="2" cols="25" required="true"></textarea>';
+          li.appendChild(text);
+          li.appendChild(label);
+          li.appendChild(textarea);
+          ul.appendChild(li);
+          insertAfter(ul, select);
+          ulCount++;
+          break;
+        case "Cold Coffee":
+          if (ulCount > 0) {
+            p.removeChild(document.getElementsByTagName("ul")[0]);
+            ulCount--;
+          }
+          var text = document.createTextNode("Cold Coffee - Large ($1 Extra)");
+          var ul = document.createElement("ul");
+          var li = document.createElement("li");
+          li.innerHTML =
+            '<input id="checkbox" type="checkbox" name="hear" value="Cold Coffee" onclick="checkboxOnclick(this)"/>';
+          var label = document.createElement("li");
+          label.innerHTML =
+            '<label id="label" for="textarea" style="visibility:hidden;">Please give more details*:</label>';
+          var textarea = document.createElement("li");
+          textarea.innerHTML =
+            '<textarea name="example" id="textarea" style="visibility:hidden;" placeholder="Any additional customization*" rows="2" cols="25"></textarea>';
+          li.appendChild(text);
+          li.appendChild(label);
+          li.appendChild(textarea);
+          ul.appendChild(li);
+          insertAfter(ul, select);
+          ulCount++;
+          break;
+        case "Lemon Iced Tea":
+          if (ulCount > 0) {
+            p.removeChild(document.getElementsByTagName("ul")[0]);
+            ulCount--;
+          }
+          var text = document.createTextNode("Lemon Iced Tea- Large ($1 Extra)");
+          var ul = document.createElement("ul");
+          var li = document.createElement("li");
+          li.innerHTML =
+            '<input id="checkbox" type="checkbox" name="hear" value="Lemon Iced Tea" onclick="checkboxOnclick(this)"/>';
+          var label = document.createElement("li");
+          label.innerHTML =
+            '<label id="label" for="textarea" style="visibility:hidden;">Any additional customization*:</label>';
+          var textarea = document.createElement("li");
+          textarea.innerHTML =
+            '<textarea name="example" id="textarea" style="visibility:hidden;" placeholder="Any additional customization*" rows="2" cols="25"></textarea>';
+          li.appendChild(text);
+          li.appendChild(label);
+          li.appendChild(textarea);
+          ul.appendChild(li);
+          insertAfter(ul, select);
+          ulCount++;
+          break;
+        case "Espresso":
+          if (ulCount > 0) {
+            p.removeChild(document.getElementsByTagName("ul")[0]);
+            ulCount--;
+          }
+          var text = document.createTextNode("Espresso- Large ($1 Extra)");
+          var ul = document.createElement("ul");
+          var li = document.createElement("li");
+          li.innerHTML =
+            '<input id="checkbox" type="checkbox" name="hear" value="Espresso" onclick="checkboxOnclick(this)"/>';
+          var label = document.createElement("li");
+          label.innerHTML =
+            '<label id="label" for="textarea" style="visibility:hidden;">Any additional customization*:</label>';
+          var textarea = document.createElement("li");
+          textarea.innerHTML =
+            '<textarea name="example" id="textarea" style="visibility:hidden;" placeholder="Any additional customization*" rows="2" cols="25"></textarea>';
+          li.appendChild(text);
+          li.appendChild(label);
+          li.appendChild(textarea);
+          ul.appendChild(li);
+          insertAfter(ul, select);
+          ulCount++;
+          break;
+        case "Latte":
+          if (ulCount > 0) {
+            p.removeChild(document.getElementsByTagName("ul")[0]);
+            ulCount--;
+          }
+          var text = document.createTextNode("Latte- Large ($1 Extra)");
+          var ul = document.createElement("ul");
+          var li = document.createElement("li");
+          li.innerHTML =
+            '<input id="checkbox" type="checkbox" name="hear" value="Latte" onclick="checkboxOnclick(this)"/>';
+          var label = document.createElement("li");
+          label.innerHTML =
+            '<label id="label" for="textarea" style="visibility:hidden;">Any additional customization*:</label>';
+          var textarea = document.createElement("li");
+          textarea.innerHTML =
+            '<textarea id="textarea" name="example" style="visibility:hidden;" placeholder="Any additional customization*" rows="2" cols="25"></textarea>';
+          li.appendChild(text);
+          li.appendChild(label);
+          li.appendChild(textarea);
+          ul.appendChild(li);
+          insertAfter(ul, select);
+          ulCount++;
+          break;
+      }
+    }
+    function insertAfter(newEl, targetEl) {
+      var parentEl = targetEl.parentNode;
+      if (parentEl.lastChild == targetEl) {
+        parentEl.appendChild(newEl);
+      } else {
+        parentEl.insertBefore(newEl, targetEl.nextSibling);
+      }
+    }
+    function checkboxOnclick(checkbox) {
+      if (checkbox.checked == true) {
+        document.getElementById("textarea").style.visibility = "visible";
+        document.getElementById("label").style.visibility = "visible";
+      } else {
+        document.getElementById("textarea").style.visibility = "hidden";
+        document.getElementById("label").style.visibility = "hidden";
+      }
+    }
+
+
+    function newFunction() {
+      document.getElementById("myForm").reset();
+    }
+
+    function validate_required(field, alerttxt) {
+      with (field) {
+        if (value == null || value == "") {
+          alert(alerttxt);
+          return false;
+        } else {
+          return true;
+        }
+      }
+    }
+    function validate_form(thisform) {
+      var fill_title = document.getElementsByName("title"); //validate radio button
+      var flag = 0;
+      for (var i = 0; i < fill_title.length; i++) {
+        if (fill_title.item(i).checked == true) {
+          flag = 1;
+          break;
+        }
+      }
+      if (flag == 0) {
+        alert("Please choose a title!");
+        return false;
+      }
+      with (thisform) {
+        if (
+          validate_required(firstName, "Fill First Name!") ==
+          false
+        ) {
+          firstName.focus();
+          return false;
+        }
+        else{
+          document.getElementById("textarea").style.visibility = "hidden";
+        document.getElementById("label").style.visibility = "hidden";
+        }
+      
+        if (
+          validate_required(emailId, "Fill Email!") == false
+        ) {
+          emailId.focus();
+          return false;
+        }
+        if (
+          validate_required(
+            phoneNumber,
+            "Fill Phone Number "
+          ) == false
+        ) {
+          phoneNumber.focus();
+          return false;
+        }
+        if (
+          validate_required(zipCode, "Fill Zipcode") == false
+        ) {
+          zipCode.focus();
+          return false;
+        }
+        if (validate_required(source, "Please select a way!") == false) {
+          source.focus();
+          return false;
+        }
+        if (
+          validate_required(
+            example,
+            "Please select a checkbox"
+          ) == false
+        ) {
+          example.focus();
+          return false; //validate both the checkbox and the textarea
+        }
+        if (
+          validate_required(text, "Comments must be filled out!") == false
+        ) {
+          text.focus();
+          return false;
+        }
+      }
+    }
+    var btn = document.getElementById("btn");
+    var radio = document.getElementsByName("title");
+    var first_name = document.getElementById("firstName");
+    var email_id = document.getElementById("emailId");
+    var phone_number = document.getElementById("phoneNumber");
+    var street_address1 = document.getElementById("streetAddress1");
+    var street_address2 = document.getElementById("streetAddress2");
+    var zip_code = document.getElementById("zipCode");
+    var mySelect = document.getElementById("select");
+    var checkbox = document.getElementsByName("hear");
+    var example = document.getElementsByName("example");
+    var comments = document.getElementById("comments");
+    btn.addEventListener("click", function () {
+      for (var i = 0; i < radio.length; i++) {
+        if (radio[i].checked) {
+          localStorage.title = radio[i].value;
+        }
+      }
+
+
+      localStorage.firstName = first_name.value;
+      localStorage.emailId = email_id.value;
+      localStorage.phoneNumber = phone_number.value;
+      localStorage.streetAddress1 = street_address1.value;
+      localStorage.streetAddress2 = street_address2.value;
+      localStorage.zipCode = zip_code.value;
+      var myindex = mySelect.selectedIndex;
+      localStorage.hear = mySelect.options[myindex].value;
+      localStorage.comments = comments.value;
+      for (var i = 0; i < checkbox.length; i++) {
+        if (checkbox[i].checked) { 
+          
+          localStorage.setItem('example', example[i].value);
+        }
+      }
+    
+    }
+    );
+  </script>
+
+</body>
+
+</html>
